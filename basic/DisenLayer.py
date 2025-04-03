@@ -1,4 +1,4 @@
-from Disen_helper import *
+from helper import *
 import torch
 from torch.nn import Parameter
 from torch_geometric.nn.conv import MessagePassing
@@ -95,13 +95,6 @@ class DisenLayer(MessagePassing):
         global analy_alpha
         analy_alpha = alpha * selected_space_weight.unsqueeze(2)
         alpha = alpha * selected_space_weight.unsqueeze(2)
-
-        if self.p.degree_norm:
-            # 获取每个消息发送节点的度数，并计算归一化因子
-            degree = torch.bincount(edge_index_j)
-            degree_norm = 1.0 / (degree[edge_index_j].float() + 1e-5)  # 防止除以0
-            # 使用归一化因子对消息进行加权，减少高度数节点的影响
-            alpha = alpha * degree_norm.view(-1, 1, 1)
 
         alpha = self.drop(alpha)
 

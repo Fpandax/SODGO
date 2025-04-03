@@ -187,16 +187,16 @@ class Runner(object):
 
     def add_model(self, model, score_func):
         model_name = '{}_{}'.format(model, score_func)
-        if model_name.lower() == 'disenkgat_transe':
-            model = DisenKGAT_TransE(self.edge_index, self.edge_type, params=self.p
+        if model_name.lower() == 'sodgo_transe':
+            model = SODGO_TransE(self.edge_index, self.edge_type, params=self.p
                                      , node_attributes=self.node_attributes, rel_strength=self.rel_strength
                                      , init_goemb=self.init_goemb)
-        # elif model_name.lower() == 'disenkgat_interacte':
-        #     model = DisenKGAT_InteractE(self.edge_index, self.edge_type, params=self.p
+        # elif model_name.lower() == 'sodgo_interacte':
+        #     model = sodgo_InteractE(self.edge_index, self.edge_type, params=self.p
         #                                 , node_attributes=self.node_attributes, rel_strength=self.rel_strength
         #                                 , init_goemb=self.init_goemb)
-        # elif model_name.lower() == 'disenkgat_similarity':
-        #     model = DisenKGAT_Similarity(self.edge_index, self.edge_type, params=self.p
+        # elif model_name.lower() == 'sodgo_similarity':
+        #     model = sodgo_Similarity(self.edge_index, self.edge_type, params=self.p
         #                                  , node_attributes=self.node_attributes, rel_strength=self.rel_strength
         #                                  , init_goemb=self.init_goemb)
             model.to(self.device)
@@ -484,7 +484,7 @@ if __name__ == '__main__':
     parser.add_argument('-rootpath', dest='rootpath', default='./', help='Root path')
     parser.add_argument('-name', default='InteractE_FB15k_K3_D200_club_b_mi_drop', help='Set run name for saving/restoring models')
     parser.add_argument('-data', dest='dataset', default='GO_basic_triplet', help='Dataset to use, default: GO_basic_triplet')
-    parser.add_argument('-model', dest='model', default='disenkgat', help='Model Name')
+    parser.add_argument('-model', dest='model', default='sodgo', help='Model Name')
     parser.add_argument('-score_func', dest='score_func', default='interacte', help='Score Function for Link prediction')
     parser.add_argument('-opn', dest='opn', default='cross', help='Composition Operation to be used in RAGAT')
     parser.add_argument('-batch', dest='batch_size', default=2048, type=int, help='Batch size')

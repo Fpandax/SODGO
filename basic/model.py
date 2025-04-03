@@ -192,7 +192,7 @@ class CapsuleBase(BaseModel):
         rel_emb = torch.index_select(r, 0, rel).repeat(1, self.p.num_factors)
         return sub_emb, rel_emb, x, 0., 0.
 
-class DisenKGAT_TransE(CapsuleBase):
+class SODGO_TransE(CapsuleBase):
     def __init__(self, edge_index, edge_type, params=None, node_attributes=None, rel_strength=None, init_goemb=None):
         self.node_attributes = node_attributes
         self.rel_strength = rel_strength
@@ -246,7 +246,7 @@ class DisenKGAT_TransE(CapsuleBase):
             pred = torch.einsum('bk,bkn->bn', [attention, x])
             pred = torch.clamp(pred, min=0., max=1.0)
         return pred, corr, all_ent, analy_alpha
-class DisenKGAT_InteractE(CapsuleBase):
+class SODGO_InteractE(CapsuleBase):
     def __init__(self, edge_index, edge_type, params=None, node_attributes=None, rel_strength=None, init_goemb=None):
         self.node_attributes = node_attributes
         self.rel_strength = rel_strength
