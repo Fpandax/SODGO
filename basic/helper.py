@@ -140,6 +140,12 @@ def get_combined_results(left_results, right_results):
             (left_results['hits@{}'.format(k + 1)] + right_results['hits@{}'.format(k + 1)]) / (2 * count), 5)
     return results
 
+def dim_reduction(x, dim):
+    '''Reduce the dimension of tensor x to dim by pca'''
+    x = x - torch.mean(x, 0, True)
+    cov = torch.mm(x.t(), x) / (x.size(0) - 1)
+    U, S, V = torch.svd(cov)
+    return torch.mm(x, U[:, :dim])
 
 def get_param(shape):
     param = Parameter(torch.Tensor(*shape));
