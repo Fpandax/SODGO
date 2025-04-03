@@ -30,6 +30,5 @@ python SODGOrun.py
 
 
 #### Embedding analysis
-- The `attention_analyse` folder, specifically, is used for **Section 3.1: Weight Distribution and Embedding Information Variation of the SODGO Model**, and contains the `analyze.ipynb` notebook.
-- The `distance_analyse` folder contains the `analyze.ipynb` file for distance analysis.
+- The `attention_analyse` and `distance_analyse` folder, specifically, is used for **Section 3.1: Weight Distribution and Embedding Information Variation of the SODGO Model**, and contains the `analyze.ipynb` notebook.
 - The `embed_analyse` folder is used for **Section 3.2: Performance Evaluation of GO Representation Learning**, and contains an `embedding` subfolder with an `analyze.ipynb` file for evaluating GO representation learning performance.
