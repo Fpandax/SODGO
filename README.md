@@ -16,7 +16,8 @@ Please download it and put it in the data folder of the corresponding directory
 | experiment | https://drive.google.com/drive/folders/1FIMibwHAQh4JqNlonB4oafRUskNPsPEm?usp=drive_link | Downstream task datasets | 
 
 ### Folder structure
-- The `basc` folder contains the main model SODGO, as described in Section 2 of the paper.
+- The `data_load` folder process go.obo generates triples and dataset partitions.
+- The `basic` folder contains the main model SODGO, as described in Section 2 of the paper.
 - The `experiment` folder is for embedding analysis, corresponding to Sections 3.1 and 3.2 of the paper.
 - The `downstream` folder contains the downstream tasks, as described in Section 3.3 of the paper.
 
