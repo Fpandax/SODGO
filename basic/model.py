@@ -42,7 +42,7 @@ class BaseModel(torch.nn.Module):
 
         self.p = params
         self.act = torch.tanh
-        # 替换 BCELoss 为 BCEWithLogitsLoss
+        
         self.bceloss = torch.nn.BCEWithLogitsLoss()
 
     def loss(self, pred, true_label):
@@ -65,14 +65,14 @@ class SparseInputLinear(nn.Module):
         self.bias.data.uniform_(-stdv, stdv)
 
     def forward(self, x):
-        # 获取输入 x 的设备
+        
         x_device = x.device
 
-        # 将 weight 和 bias 移动到 x 的设备，而不改变它们的 nn.Parameter 类型
+        
         self.weight.data = self.weight.data.to(x_device)
         self.bias.data = self.bias.data.to(x_device)
 
-        # 执行矩阵乘法
+        
         output = torch.mm(x, self.weight) + self.bias
 
         return output
@@ -89,7 +89,7 @@ class CapsuleBase(BaseModel):
         self.rel_strength = rel_strength
         # self.init_embed = get_param((self.p.num_ent, self.p.init_dim))
         if init_goemb is not None:
-            #将字典init_goemb转换为tensor
+            
             # Parse the string values into lists of floats
             init_goemb_array = np.array([np.fromstring(value.strip('[]'), sep=',') for value in init_goemb.values()])
             self.init_goemb = torch.from_numpy(init_goemb_array).float()

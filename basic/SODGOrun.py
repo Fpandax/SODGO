@@ -119,7 +119,7 @@ class Runner(object):
         self.logger.info('{}_{} num is {}\n'.format('test', 'tail', len(self.triples['{}_{}'.format('test', 'tail')])))
         self.logger.info('{}_{} num is {}\n'.format('valid', 'tail', len(self.triples['{}_{}'.format('valid', 'tail')])))
         self.edge_index, self.edge_type = self.construct_adj()
-        #保存self.edge_index, self.edge_type
+        
         # torch.save(self.edge_index, 'attention_analyse/edge_index.pt')
         # torch.save(self.edge_type, 'attention_analyse/edge_type.pt')
 
@@ -212,22 +212,22 @@ class Runner(object):
     #     else:
     #         return torch.optim.Adam(model.parameters(), lr=self.p.lr, weight_decay=self.p.l2), None
     def add_optimizer(self, model):
-        # 定义一些基本的超参数，例如学习率和权重衰减
+        
         lr = self.p.lr
         weight_decay = self.p.l2
-        optimizer_type = self.p.optimizer_type  # 超参数控制优化器类型，比如 'adam', 'sgd', 'rmsprop'
+        optimizer_type = self.p.optimizer_type  
 
         if self.p.mi_train and self.p.mi_method.startswith('club'):
             mi_disc_params = list(map(id, model.mi_Discs.parameters()))
             rest_params = filter(lambda x: id(x) not in mi_disc_params, model.parameters())
 
-            # 根据超参数选择优化器
+            
             optimizer_main = self._get_optimizer(optimizer_type, rest_params, lr, weight_decay)
             optimizer_mi = self._get_optimizer(optimizer_type, model.mi_Discs.parameters(), lr, weight_decay)
 
             return optimizer_main, optimizer_mi
         else:
-            # 为所有参数选择优化器
+            
             optimizer_main = self._get_optimizer(optimizer_type, model.parameters(), lr, weight_decay)
             return optimizer_main, None
 
@@ -350,10 +350,10 @@ class Runner(object):
         corr_losses = []
         lld_losses = []
         train_iter = iter(self.data_iter['train'])
-        # 初始化 GradScaler
+        
         scaler = amp.GradScaler()
 
-        # 使用 tqdm 显示进度条
+        
         with tqdm(total=len(self.data_iter['train']), desc=f"Epoch {epoch + 1}/{self.p.max_epochs}",
                   unit='batch') as pbar:
             for step, batch in enumerate(train_iter):
@@ -362,7 +362,7 @@ class Runner(object):
                     self.model.mi_Discs.eval()
                 sub, rel, obj, label, neg_ent, sub_samp = self.read_batch(batch, 'train')
 
-                # 使用 autocast 进行混合精度计算
+                
                 with amp.autocast():
                     pred, corr, all_ent, analy_alpha = self.model.forward(sub, rel, None, neg_ent, 'train')
                     loss = self.model.loss(pred, label)
@@ -371,14 +371,14 @@ class Runner(object):
                         loss = loss + self.p.alpha * corr
                         corr_losses.append(corr.item())
 
-                # 使用 scaler 来缩放梯度
+                
                 scaler.scale(loss).backward()
                 scaler.step(self.optimizer)
                 scaler.update()
 
                 losses.append(loss.item())
 
-                # 更新进度条
+                
                 pbar.update(1)
 
                 # start to compute mi_loss
@@ -421,7 +421,7 @@ class Runner(object):
             self.best_val_mrr, self.best_val, self.best_epoch, val_mrr, self.min_lldloss = 0., {}, 0, 0., 10.
             current_time = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
             save_path = os.path.join('{}/checkpoints'.format(self.p.rootpath),  'checkpoints', f'model_{current_time}.pkl')
-            # 确保 'checkpoints' 目录存在
+            
             checkpoints_dir = os.path.dirname(save_path)
             if not os.path.exists(checkpoints_dir):
                 os.makedirs(checkpoints_dir)

@@ -60,12 +60,12 @@ class DisenLayer(MessagePassing):
 
 
     def forward(self, x, rel_embed, mode):
-        # 将 rel_embed 和 edge_index 等移到与模型同一设备上
+        
         rel_embed = torch.cat([rel_embed, self.loop_rel.to(self.device)], dim=0)
         edge_index = torch.cat([self.edge_index.to(self.device), self.loop_index.to(self.device)], dim=1)
         edge_type = torch.cat([self.edge_type.to(self.device), self.loop_type.to(self.device)])
 
-        # 进行传播计算时，确保所有张量位于相同设备
+        
         out= self.propagate(edge_index, size=None,
                              x=x.to(self.device), edge_type=edge_type.to(self.device),
                              rel_embed=rel_embed.to(self.device), rel_weight=self.rel_weight.to(self.device),

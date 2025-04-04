@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from torch.nn import Parameter
 import torch.nn as nn
 np.set_printoptions(precision=4)
-import torch.fft  # 导入新的fft模块
+import torch.fft  
 
 def set_gpu(gpus):
     """
@@ -153,7 +153,7 @@ def get_param(shape):
     return param
 
 def com_mult(a, b):
-    # 如果a和b是复数形式的
+    
     if a.shape[-1] == 2 and b.shape[-1] == 2:
         r1, i1 = a[..., 0], a[..., 1]
         r2, i2 = b[..., 0], b[..., 1]
@@ -164,7 +164,7 @@ def com_mult(a, b):
         return a * b
 
 def conj(a):
-    # 如果a是复数形式的
+    
     if a.shape[-1] == 2:
         a[..., 1] = -a[..., 1]
     return a

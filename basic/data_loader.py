@@ -11,7 +11,7 @@ def load_node_attributes(file_path, ent2id):
 
 
     for _, row in go_df.iterrows():
-        go_id = row['GO_id']  # 确保ID的格式一致
+        go_id = row['GO_id']  
         if go_id in ent2id:
             node_attributes[ent2id[go_id]] = namespace2id[row['namespace']]
             node_ebedding[ent2id[go_id]] = row['embedding']
@@ -34,7 +34,7 @@ def load_relationship_strengths(file_path, namespace2id, rel2id):
             if reverse_rel_id is not None:
                 rel_strength[(namespace2_id, namespace1_id, reverse_rel_id)] = row['count']
 
-    # 可选：使用默认值（如0）初始化缺失的组合
+    
     for ns1 in namespace2id.values():
         for ns2 in namespace2id.values():
             for rel in rel2id.values():
