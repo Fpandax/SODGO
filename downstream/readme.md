@@ -12,7 +12,8 @@ python run.py
 
 
 ## PA(Protein annotation prediction) 
-Please download it and put it in the data folder of the corresponding directory
+1) Please download the PO2GO model
+2) Please download it and put it in the data folder of the corresponding directory
 
 ## DTA(Drug-target interaction prediction)
 1) Please download SISDTA model
